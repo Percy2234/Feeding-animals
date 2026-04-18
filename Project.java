@@ -3,15 +3,16 @@ import java.util.ArrayList;
 public class Project {
     public static void main(String[] args) {
         Duck duck = new Duck("Hyun", 50, true);
-        Kangaroo kangaroo = new Kangaroo("Geuk", 70, 3);
+        Kangaroo kangaroo = new Kangaroo("Kim", 70, 3);
         FeedingStation station = new FeedingStation("Seoul Feeding Station", 20);
 
         station.addAnimal(duck);
         station.addAnimal(kangaroo);
 
         System.out.println("=== Animals in the Park ===");
+        System.out.println();
         station.showAnimals();
-        System.out.println("Choose an animal to feed:");
+        System.out.println("\nChoose an animal to feed:");
         System.out.println("1. Duck");
         System.out.println("2. Kangaroo");
         int choice = In.nextInt();
@@ -20,7 +21,7 @@ public class Project {
             if (station.getFood() >= 1) {
                 station.feedAnimal(1);
                 duck.eatFood(1);
-                System.out.println("The duck was fed.");
+                System.out.println("Duck is eating the food. \nDuck Energy increased (+1)");
             } else {
                 System.out.println("Not enough food.");
             }
@@ -28,31 +29,33 @@ public class Project {
             if (station.getFood() >= 1) {
                 station.feedAnimal(1);
                 kangaroo.eatFood(1);
-                System.out.println("The kangaroo was fed.");
+                System.out.println("Kangaroo is eating the food. \nKangaroo Energy increased (+1)");
             } else {
                 System.out.println("Not enough food.");
             }
         } else {
             System.out.println("Invalid choice.");
+            return;
         }
 
-        System.out.println("Would you like to top up more food?");
+        System.out.println("\nWould you like to top up more food?");
         System.out.println("1. Yes");
         System.out.println("2. No");
         int refillChoice = In.nextInt();
 
         if (refillChoice == 1) {
-            System.out.println("How much food would you like to add?");
+            System.out.println("\nHow much food would you like to add?");
             int amount = In.nextInt();
             station.refillFood(amount);
         } else {
             System.out.println("No extra food was added.");
         }
 
-        System.out.println("=== Animals After Feeding ===");
+        System.out.println("\n=== Animals After Feeding ===");
+        System.out.println();
         station.showAnimals();
 
-        System.out.println("=== Animals Moving ===");
+        System.out.println("\n=== Animals Moving ===");
         for (Wildlife animal : station.getAnimals()) {
             animal.move();
             System.out.println(animal);
@@ -92,7 +95,7 @@ class Wildlife {
     }
 
     public void move() {
-        this.energy = this.energy - 5;
+        this.energy = this.energy - 3;
         System.out.println(this.name + " moves.");
     }
 
@@ -124,7 +127,8 @@ class Duck extends Wildlife {
     @Override
     public void move() {
         setEnergy(getEnergy() - 3);
-        System.out.println(getName() + " waddles.");
+        System.out.println();
+        System.out.println(getName() + " is happy. He use Energy to waddles.");
     }
 
     @Override
@@ -155,9 +159,10 @@ class Kangaroo extends Wildlife {
 
     @Override
     public void move() {
-        setEnergy(getEnergy() - 8);
+        setEnergy(getEnergy() - 5);
         this.jumpHeight = this.jumpHeight + 1;
-        System.out.println(getName() + " jumps.");
+        System.out.println();
+        System.out.println(getName() + " is happy. He use Energy to bounce. ");
     }
 
     @Override
@@ -225,6 +230,7 @@ class FeedingStation {
     }
 
     public String toString() {
-        return "FeedingStation: " + this.name + ", food left: " + this.food;
+        return "\nFeedingStation: " + this.name + ", food left: " + this.food;
+
     }
 }
